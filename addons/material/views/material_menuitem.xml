@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem
+        id="parent_material_id"
+        name="Material"
+        sequence="10"
+    />
+        <menuitem
+            id="child_material_id"
+            name="Material"
+            sequence="2"
+            parent="material.parent_material_id"
+            action="material.material_actions_id"
+        />
+</odoo>

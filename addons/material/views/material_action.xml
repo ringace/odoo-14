@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="material_actions_id" model="ir.actions.act_window">
+        <field name="name">Material</field>
+        <field name="res_model">material</field>
+    </record>
+
+    <record id="material_actions_tree_view_id" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="material.material_tree_view_id"/>
+        <field name="act_window_id" ref="material.material_actions_id"/>
+    </record>
+</odoo>

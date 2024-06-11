@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem
+        id="parent_supplier_id"
+        name="Supplier"
+        sequence="5"
+    />
+        <menuitem
+            id="child_supplier_id"
+            name="Supplier"
+            sequence="1"
+            parent="supplier.parent_supplier_id"
+            action="supplier.supplier_actions_id"
+        />
+</odoo>
