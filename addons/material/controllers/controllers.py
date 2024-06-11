@@ -252,59 +252,6 @@ class Material(http.Controller):
             headers=headers
         )
 
-    # get material by type
-    @http.route("/material/<string:material_type>", auth='public', csrf=False, type="http", methods=["GET"])
-    def get_material_by_type(self, material_type):
-        # set headers
-        headers = {"Content-Type": "application/json"}  
-
-        try:
-            # get materials by material type
-            materials = request.env["material"].sudo().search([("material_type", "ilike", material_type)])
-        except Exception as error:
-            # get materials failed
-            Response.status = "500"
-            return Response(
-                json.dumps({
-                    "message": error
-                }),
-                headers=headers
-            )
-            
-
-        if not materials:
-            # no material found
-            Response.status = "404"
-            return Response(
-                json.dumps({
-                    "message": "No material found"
-                }),
-                headers=headers
-            )
-
-        # set material
-        data = [
-            {
-                "id": m.id,
-                "code": m.code,
-                "name": m.name,
-                "material_type": m.material_type,
-                "buy_price": m.buy_price,
-                "supplier_id": m.supplier_id.id,
-                "supplier_name": m.supplier_id.name
-            }
-            for m in materials
-        ]
-
-        # material retrieved
-        Response.status = "200"
-        return Response(
-            json.dumps({
-                "data": data
-            }),
-            headers=headers
-        )
-
     # update material by id
     @http.route("/material/<int:material_id>", auth="public", csrf=False, type="json", methods=["PUT"])
     def update_material_by_id(self, material_id):
