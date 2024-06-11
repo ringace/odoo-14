@@ -3,6 +3,10 @@ from odoo import http
 from odoo.http import request, Response, JsonRequest
 
 import json
+import re
+
+# import logging
+# _logger = logging.getLogger(__name__)
 
 # function to change jsonrpc response format
 def _alternative_json_response(self, result=None, error=None):
@@ -103,13 +107,57 @@ class Material(http.Controller):
             
     # get all material
     @http.route("/material", auth="public", csrf=False, type="http", methods=["GET"])
-    def get_materials(self):
+    def get_materials(self, **kwargs):
         # set headers
-        headers = {"Content-Type": "application/json"}  
+        headers = {"Content-Type": "application/json"}
+
+        # materials_type_allowed
+        materials_type_allowed = ["fabric", "cotton", "jeans"]
+
+        # get materials type query parameters
+        materials_type_request = kwargs.get("type")
+
+        # set request from query parameters and material_type validation if material type exists
+        if materials_type_request:
+            # whitespace or spaces not allowed
+            if re.search(r"\s+", materials_type_request):
+                Response.status = "400"
+                return Response(
+                    json.dumps({
+                        "message": "Whitespace or blank spaces is not allowed, please refer to this example: fabric,jeans,cotton"
+                    }),
+                    headers=headers
+                )
+            # make array
+            materials_type_request = materials_type_request.split(",")
+            # empty string in list not allowed
+            if "" in materials_type_request:
+                Response.status = "400"
+                return Response(
+                    json.dumps({
+                        "message": "Empty value request is not allowed, please refer to this example: fabric,jeans,cotton"
+                    }),
+                    headers=headers
+                )
+            # compare if material request match with material allowed
+            materials_compare_result = all(ele in materials_type_allowed for ele in materials_type_request)
+            # material type request is not allowed
+            if not materials_compare_result:
+                Response.status = "400"
+                return Response(
+                    json.dumps({
+                        "message": "Material type can only be fabric, jeans or cotton"
+                    }),
+                    headers=headers
+                )
 
         try:
-            # get all materials
-            materials = request.env["material"].sudo().search([])
+            if materials_type_request:
+                # get materials by material type
+                materials = request.env["material"].sudo().search([("material_type", "in", materials_type_request)])
+            else:
+                # get all materials
+                materials = request.env["material"].sudo().search([])
         except Exception as error:
             # get materials failed
             Response.status = "500"
