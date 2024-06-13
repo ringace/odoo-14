@@ -10,7 +10,7 @@ http://localhost:8069
 
 #### DESCRIPTION
 ```sh
-Create a material
+Create a supplier
 ```
 #### REQUEST
 > | Headers      |  Body     |
@@ -22,5 +22,21 @@ Create a material
 > |---------------|-----------------------------------|
 > | `201`         | `{"message": "Supplier has been created successfully", "data": {"id": 3, "name": "Supplier 1"}}`| 
 > | `400`         | `{"message": "Name can not be empty"}`|
+
+</details>
+
+<details>
+<summary><code>GET</code> <code><b>/</b></code> <code>supplier</code></summary>
+
+#### DESCRIPTION
+```sh
+Retrieve all suppliers
+```
+
+#### Responses
+> | Code     | Response                      |
+> |---------------|-----------------------------------|
+> | `200`         | `{"data": [{"id": 1, "name": "Supplier Test"}]}`| 
+> | `404`         | `{"message": "No supplier found"}`|
 
 </details>
