@@ -6,6 +6,9 @@ from odoo.exceptions import ValidationError
 class Material(models.Model):
     _name = "material"
     _description = "Material"
+    _sql_constraints = [
+            ('code', 'unique(code)', 'Code already exists, please enter unique code'),
+    ]
 
     code = fields.Char(string="Code", required=True)
     name = fields.Char(string="Name", required=True)

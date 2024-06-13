@@ -31,6 +31,24 @@ class MaterialTest(TransactionCase):
         _logger.info(response.json())
         assert response.status_code == 201
 
+    def test_create_material_code_unique_effect(self):
+        body = {
+            
+            "code": "T24",
+            "name": "test24",
+            "material_type": "cotton",
+            "buy_price": 111,
+            "supplier_id": 1
+        }
+        data = json.dumps(body)
+        response = requests.post(
+            url=_url,
+            headers=_headers,
+            data=data
+        )
+        _logger.info(response.json())
+        assert response.status_code == 500
+
     def test_create_material_empty_code(self):
         body = {
             
