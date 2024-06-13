@@ -5,8 +5,8 @@ from odoo.http import request, Response, JsonRequest
 import json
 import re
 
-# import logging
-# _logger = logging.getLogger(__name__)
+import logging
+_logger = logging.getLogger(__name__)
 
 # function to change jsonrpc response format
 def _alternative_json_response(self, result=None, error=None):
@@ -25,7 +25,7 @@ class Material(http.Controller):
     # create a new material
     @http.route("/material", auth="public", csrf=False, type="json", methods=["POST"])
     def create_material(self):
-        # change standar jsonrpc response format
+        # change standard jsonrpc response format
         request._json_response = _alternative_json_response.__get__(request, JsonRequest)
 
         # get json request
@@ -59,6 +59,11 @@ class Material(http.Controller):
             }
 
         # buy price validation
+        if isinstance(values.get("buy_price"), str):
+            Response.status = "400"
+            return {
+                "message": "Buy price can not filled by string"
+            }
         if values.get("buy_price") < 100:
             Response.status = "400"
             return {
@@ -80,6 +85,7 @@ class Material(http.Controller):
         try:
             # request saved
             material = request.env["material"].sudo().create(values)
+            _logger.info(f"Saved material: {material}")
         except Exception as error:
             # save failed
             Response.status = "500"
@@ -307,6 +313,11 @@ class Material(http.Controller):
             }
 
         # buy price validation
+        if isinstance(values.get("buy_price"), str):
+            Response.status = "400"
+            return {
+                "message": "Buy price can not filled by string"
+            }
         if values.get("buy_price") < 100:
             Response.status = "400"
             return {

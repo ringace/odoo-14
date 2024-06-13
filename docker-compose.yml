@@ -1,6 +1,7 @@
 services:
   web:
     image: odoo:14.0
+    container_name: web-odoo
     depends_on:
       - db
     ports:
@@ -9,10 +10,12 @@ services:
       - odoo-web-data:/var/lib/odoo
       - ./config:/etc/odoo
       - ./addons:/mnt/extra-addons
+      - ./startup.sh:/startup.sh
     env_file:
       - .env
   db:
     image: postgres:15
+    container_name: db-odoo
     env_file:
       - .env
     volumes:
