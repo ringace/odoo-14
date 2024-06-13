@@ -411,7 +411,7 @@ class Material(http.Controller):
         Response.status = "200"
         return Response(
             json.dumps({
-                "message": "Material has been delete successfully"
+                "message": "Material has been deleted successfully"
             }),
             headers=headers
         )
