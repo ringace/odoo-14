@@ -36,7 +36,7 @@ Retrieve all suppliers
 #### Responses
 > | Code     | Response                      |
 > |---------------|-----------------------------------|
-> | `200`         | `{"data": [{"id": 1, "name": "Supplier Test"}]}`| 
+> | `200`         | `{"data": [{"id": 1, "name": "Supplier Test"},]}`| 
 > | `404`         | `{"message": "No supplier found"}`|
 
 </details>
@@ -138,7 +138,7 @@ Update material by id
 </details>
 
 <details>
-<summary><code>GET</code> <code><b>/</b></code> <code>material</code> <code><b>/</b></code> <code>{id}</code></summary>
+<summary><code>DELETE</code> <code><b>/</b></code> <code>material</code> <code><b>/</b></code> <code>{id}</code></summary>
 
 #### DESCRIPTION
 ```sh
