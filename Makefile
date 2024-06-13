@@ -1,4 +1,4 @@
-.PHONY: up down restart restartweb restartdb init base addons test module tests
+.PHONY: up down restart restartweb restartdb init base addons test modules tests
 .SILENT:
 
 up:
