@@ -6,9 +6,8 @@ http://localhost:8069
 ### SUPPLIER
 ------------------------------------------------------------------------------------------
 <details>
-```sh
-POST /supplier
-```
+<summary><code>POST</code> <code><b>/</b></code> <code>supplier</code></summary>
+
 #### DESCRIPTION
 ```sh
 Create a material
